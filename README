@@ -1,0 +1,90 @@
+ABOUT:
+
+IllustRender is a plugin for Wordpress that enables the inclusion of programmatically generated illustrations into your entries. Currently, it supports MetaPost and Postscript along with the PSMath library.
+
+IllustRender page: http://www.tangentspace.net/cz/archives/2005/01/illustrender
+PSMath page: http://www.id.cbs.dk/~mtk/PSMath/psmT.html
+
+CONTACT:
+Alex Gittens <rubberduckie@gmail.com>
+http://www.tangentspace.net/cz
+
+INSTALLATION:
+
+0. Backup everything important--- you can never be too safe. On the other hand, if all your entries suddenly disappear after activating IllustRender, they will probably come right back after you deactivate it. Not that you should need to worry about that :)
+
+1. Extract all the files and the tmp subdirectory in the archive into a subdirectory of your main blog direcory, like wordpress/illustrender. 
+
+2. Chmod the php files so they can be run by the server, if necessary. Chmod the tmp directory so it can be written to by the server. (chmod 777)
+
+3. Create a pictures subdirectory in the illustrender directory that can be written to by the server. (chmod 777)
+
+4. In the illustrender.php and illustrender-plugin.php file, change the paths at the top of the files as appropriate to point to your installation of IllustRender.
+
+5. In the class.illustrender.php file, change the helper program paths to point to where they are installed on your system.
+
+6. Move the illustrender-plugin.php file to your WordPress plugin location (something like wordpress/wp-content/plugins)
+
+7. Cross your fingers and activate the plugin in WordPress.
+
+USE:
+
+Use the 'illust' button in your entry editor, or use the tags [illust] and [/illust] to surround the illustration code. By default, IllustRender assumes the illustration is MetaPost; to let it know that it is handling Postscript, include the comment %PS somewhere in the code.
+
+For MetaPost code, don't include the beginfig(), endfig(), or end commands; these are added, along with a suitable prologue.
+
+For PostScript code, don't call showpage; this is called automatically--- naturally, the illustration should be a single page. If you use the PSMath library, don't call PSMinit or PSMclose; these are also added in the wrapper code.
+
+You can achieve a rough control over the size of images by decreasing the $_illust_density variable in class.illustrender.php.
+
+EXAMPLES:
+ 
+METAPOST:
+pickup pencircle scaled 4pt yscaled .2pt rotated 60;
+n := 5;
+for i:= (n*20) step -(n) until (n):
+ draw (i,0)..(0,i)..(-i,0)..(0,-(i-n))..(i-n,0);
+endfor
+
+POSTSCRIPT (taken from the PSMath example file 3Dcircle.ps):
+%PS
+% Set 3D perspective 
+[0 0 0] [[20 -5] p2r aload pop 5] 600 3Dinit
+
+% Define 3D points, circles, and planes
+/circ* {/p xdef /s xdef s cos s sin 1 p astore} 2 ldef
+/circ {3 array circ*} def
+/P [0 0 0] def /R 1.75 def /r -0.5 def
+
+% Find the tangent angles of the cone seen from the observer
+/X 3 array def /X' 2 array def /P' P 3D def
+0 360 {X circ* X' 3D* P' vsub r2p 1 get} extrema
+/u2 xdef /u1 xdef
+
+% Draw section plane
+[R 0 R] [R neg 0 R] line
+[0 R R] [0 R neg R] line
+[r 0 r] [r neg 0 r] line
+[0 r r] [0 r neg r] line
+[1 0 1] [-1 0 1] line
+[0 1 1] [0 -1 1] line
+[0 0 r] [0 0 R] line dash stroke nodash
+
+/p 3 array def /p' 2 array def
+0 360 {p circ* R p smul*} plot closepath stroke
+u1 u2 {p circ* r p smul*} plot stroke
+u2 u1 360 add {p circ* r p smul*} plot dash stroke nodash
+u1 circ r smul 3D u1 circ R smul line stroke
+u2 circ r smul 3D u2 circ R smul line stroke
+
+% Draw conic section
+u1 u2 {p circ*} plot dash stroke nodash
+u2 u1 360 add {p circ*} plot stroke
+
+/d 1.5 def /-d d neg def
+[[d d 1] [d -d 1] [-d -d 1] [-d d 1]] lines closepath stroke
+
+% Label points
+($z=1$) [1.5 1.5 1] 3D 1 1 label
+ 
+

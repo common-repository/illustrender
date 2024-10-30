@@ -1,0 +1,32 @@
+(c) Sep 1, 1996. Matthias Trautner Kromann
+----
+
+All files in the PSM package are copyrighted under the GNU public 
+license (GPL, shown in the file GPL.html). This means that you may use
+the psMath package for free, modify it, and incorporate it into your
+own software, under the following conditions:
+
+	1. This is experimental code which has not been tested on 
+	more than one machine: it probably contains bugs and may 
+	not work on your equipment. It is provided "AS IS" and
+	comes with ABSOLUTELY NO WARRANTY and NO SUPPORT. It is 
+	YOUR RESPONSIBILITY if the program causes data loss or 
+	does not work for you.
+	
+	2. It is a violation of this license to copyright any part 
+	of the PSM code, or to modify PSM files without giving them 
+	a new name and indicating the original source. You must give
+	proper credit if you incorporate it into your own code. 
+
+If you use PSM for many illustrations in printed material, I hope
+you will advertise for PSM by indicating that the figures were 
+created with Matthias T. Kromann's PSM figure tool. For more 
+information about the PSM package, see
+
+	http://www.id.cbs.dk/~mtk/PSMath
+
+--
+Matthias Trautner Kromann    Dept of Computational Linguistics
+Email: mtkromann@ieee.org    Copenhagen Business School
+Web: www.id.cbs.dk/~mtk      Bernhard Bangs Allé 17B
+Phone: (+45) 3321 0960       DK-2000 Frederiksberg C, DENMARK
